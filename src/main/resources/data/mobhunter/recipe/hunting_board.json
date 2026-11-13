@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "minecraft:paper",
+    "I": "minecraft:iron_ingot",
+    "W": "#minecraft:planks"
+  },
+  "pattern": [
+    "PIP",
+    "WWW",
+    "W W"
+  ],
+  "result": {
+    "id": "mobhunter:hunting_board"
+  }
+}

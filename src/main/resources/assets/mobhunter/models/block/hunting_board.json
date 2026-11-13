@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "mobhunter:block/hunting_board_top",
+    "front": "mobhunter:block/hunting_board_front",
+    "side": "mobhunter:block/hunting_board_side"
+  }
+}

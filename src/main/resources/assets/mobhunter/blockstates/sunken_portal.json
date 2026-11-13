@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "mobhunter:block/sunken_portal"
+    },
+    "lit=true": {
+      "model": "mobhunter:block/sunken_portal_lit"
+    }
+  }
+}

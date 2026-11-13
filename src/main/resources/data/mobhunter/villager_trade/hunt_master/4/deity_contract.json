@@ -1,0 +1,22 @@
+{
+  "wants": {
+    "id": "minecraft:emerald",
+    "count": 40
+  },
+  "additional_wants": {
+    "id": "minecraft:diamond",
+    "count": 2
+  },
+  "gives": {
+    "id": "mobhunter:hunt_contract"
+  },
+  "given_item_modifier": [
+    {
+      "type": "mobhunter:assign_contract",
+      "tier": "deity"
+    }
+  ],
+  "max_uses": 2,
+  "xp": 30,
+  "reputation_discount": 0.05
+}

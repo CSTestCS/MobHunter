@@ -1,0 +1,26 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "mobhunter:hunter",
+        "dyeable": {
+          "color_when_undyed": -7303024
+        }
+      },
+      {
+        "texture": "mobhunter:hunter_overlay"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "mobhunter:hunter",
+        "dyeable": {
+          "color_when_undyed": -7303024
+        }
+      },
+      {
+        "texture": "mobhunter:hunter_overlay"
+      }
+    ]
+  }
+}

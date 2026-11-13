@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "mobhunter:block/shrine_altar"
+    },
+    "lit=true": {
+      "model": "mobhunter:block/shrine_altar_lit"
+    }
+  }
+}

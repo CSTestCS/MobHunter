@@ -1,0 +1,13 @@
+{
+  "type": "mobhunter:monster_forge",
+  "pattern": [
+    "HCH",
+    "H H",
+    "H H"
+  ],
+  "key": {
+    "H": "mobhunter:monster_hide",
+    "C": "mobhunter:monster_claw"
+  },
+  "result": "mobhunter:hunter_leggings"
+}

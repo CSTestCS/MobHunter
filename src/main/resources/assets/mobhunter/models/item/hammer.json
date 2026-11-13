@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "mobhunter:item/hammer",
+    "layer1": "mobhunter:item/hammer_hilt"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "mobhunter:block/shrine_altar_top",
+    "bottom": "mobhunter:block/shrine_altar_side",
+    "side": "mobhunter:block/shrine_altar_side"
+  }
+}

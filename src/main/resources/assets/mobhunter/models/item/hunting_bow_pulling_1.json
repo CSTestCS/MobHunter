@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/bow",
+  "textures": {
+    "layer0": "mobhunter:item/hunting_bow_pulling_1",
+    "layer1": "mobhunter:item/hunting_bow_pulling_1_string"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mobhunter:block/hunting_board"
+    },
+    "facing=east": {
+      "model": "mobhunter:block/hunting_board",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "mobhunter:block/hunting_board",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mobhunter:block/hunting_board",
+      "y": 270
+    }
+  }
+}

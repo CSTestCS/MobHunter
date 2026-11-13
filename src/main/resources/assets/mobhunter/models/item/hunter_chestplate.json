@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mobhunter:item/hunter_chestplate",
+    "layer1": "mobhunter:item/hunter_chestplate_overlay"
+  }
+}

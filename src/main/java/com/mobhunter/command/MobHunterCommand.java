@@ -56,6 +56,10 @@ public final class MobHunterCommand {
                         .executes(ctx -> selftest(ctx, Tier.byName(StringArgumentType.getString(ctx, "tier")), null))
                         .then(Commands.argument("creature", StringArgumentType.word()).suggests(MobHunterCommand::creatures)
                                 .executes(ctx -> selftest(ctx, Tier.byName(StringArgumentType.getString(ctx, "tier")), StringArgumentType.getString(ctx, "creature"))))))
+                .then(Commands.literal("gearstand")
+                        .then(Commands.argument("creature", StringArgumentType.word()).suggests(MobHunterCommand::creatures)
+                                .then(Commands.argument("tier", StringArgumentType.word()).suggests(MobHunterCommand::tiers)
+                                        .executes(ctx -> gearStand(ctx, StringArgumentType.getString(ctx, "creature"), StringArgumentType.getString(ctx, "tier"))))))
                 .then(Commands.literal("huntstep").executes(MobHunterCommand::huntStep))
                 .then(Commands.literal("abandon").executes(ctx -> {
                     HuntManager.abandon(ctx.getSource().getPlayerOrException());
@@ -172,6 +176,42 @@ public final class MobHunterCommand {
                 : HuntManager.investigate(player, clue);
         ctx.getSource().sendSuccess(() -> Component.literal("Investigated: " + ok), false);
         return ok ? 1 : 0;
+    }
+
+    /** Debug helper: a mannequin wearing a creature's full Plate set, with its Blade, Spear and materials floating beside it. */
+    private static int gearStand(CommandContext<CommandSourceStack> ctx, String creature, String tierName) {
+        var level = ctx.getSource().getLevel();
+        CreatureProfile p = profile(creature);
+        Tier tier = Tier.byName(tierName);
+        if (p == null || tier == Tier.NONE) return 0;
+        var src = new com.mobhunter.gear.MonsterSource(p.id(), tier);
+        var pos = ctx.getSource().getPosition();
+        var stand = net.minecraft.world.entity.EntityTypes.MANNEQUIN.create(level, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+        if (stand == null) return 0;
+        stand.snapTo(pos.x, pos.y, pos.z, 0, 0);
+        stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.HEAD, com.mobhunter.gear.GearStats.forge(ModItems.HUNTER_HELMET.get(), com.mobhunter.gear.GearKind.HELMET, src));
+        stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.CHEST, com.mobhunter.gear.GearStats.forge(ModItems.HUNTER_CHESTPLATE.get(), com.mobhunter.gear.GearKind.CHESTPLATE, src));
+        stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.LEGS, com.mobhunter.gear.GearStats.forge(ModItems.HUNTER_LEGGINGS.get(), com.mobhunter.gear.GearKind.LEGGINGS, src));
+        stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.FEET, com.mobhunter.gear.GearStats.forge(ModItems.HUNTER_BOOTS.get(), com.mobhunter.gear.GearKind.BOOTS, src));
+        stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, com.mobhunter.gear.GearStats.forge(ModItems.HUNTER_BLADE.get(), com.mobhunter.gear.GearKind.BLADE, src));
+        stand.setItemSlot(net.minecraft.world.entity.EquipmentSlot.OFFHAND, com.mobhunter.gear.GearStats.forge(ModItems.HUNTER_SPEAR.get(), com.mobhunter.gear.GearKind.SPEAR, src));
+        level.addFreshEntity(stand);
+        net.minecraft.world.item.ItemStack[] shown = {
+                com.mobhunter.gear.GearStats.forge(ModItems.HUNTER_BLADE.get(), com.mobhunter.gear.GearKind.BLADE, src),
+                com.mobhunter.gear.GearStats.forge(ModItems.HUNTER_SPEAR.get(), com.mobhunter.gear.GearKind.SPEAR, src),
+                com.mobhunter.gear.GearStats.forge(ModItems.HUNTER_HELMET.get(), com.mobhunter.gear.GearKind.HELMET, src),
+                com.mobhunter.gear.MonsterMaterialItem.create(ModItems.MONSTER_HIDE.get(), p, tier, 1),
+                com.mobhunter.gear.MonsterMaterialItem.create(ModItems.MONSTER_CLAW.get(), p, tier, 1),
+                com.mobhunter.gear.MonsterMaterialItem.create(ModItems.MONSTER_GEM.get(), p, tier, 1)};
+        for (int i = 0; i < shown.length; i++) {
+            var item = new net.minecraft.world.entity.item.ItemEntity(level, pos.x - 1.5 + i * 0.6, pos.y + 2.4, pos.z - 0.8, shown[i]);
+            item.setNeverPickUp();
+            item.setUnlimitedLifetime();
+            item.setNoGravity(true);
+            item.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+            level.addFreshEntity(item);
+        }
+        return 1;
     }
 
     private MobHunterCommand() {}

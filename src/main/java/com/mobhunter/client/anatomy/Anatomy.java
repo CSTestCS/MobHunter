@@ -73,9 +73,9 @@ public final class Anatomy {
         if (sk.body == null) return;
         Ctx c = new Ctx(sk, e, creatureColor, tier, age, solid, glow);
         float s = switch (tier) {
-            case MONSTROUS -> 0.5f;
-            case DEITY -> 0.7f;
-            default -> 0.35f;
+            case MONSTROUS -> 0.95f;
+            case DEITY -> 1.25f;
+            default -> 0.7f;
         };
         if (helm) {
             Feature f = e.features().stream().filter(HEAD_FEATURES::contains).findFirst().orElse(Feature.CROWN);

@@ -346,7 +346,7 @@ public final class EntranceController {
     }
 
     private void lightPortal(ServerLevel level) {
-        for (BlockPos p : BlockPos.betweenClosed(at.offset(-6, -1, -6), at.offset(6, 1, 6))) {
+        for (BlockPos p : BlockPos.betweenClosed(at.offset(-8, -1, -8), at.offset(8, 1, 8))) {
             BlockState s = level.getBlockState(p);
             if (s.is(ModBlocks.SUNKEN_PORTAL.get())) level.setBlock(p, s.setValue(ShrineAltarBlock.LIT, true), 3);
         }

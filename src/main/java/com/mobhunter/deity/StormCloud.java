@@ -24,6 +24,17 @@ import org.jspecify.annotations.Nullable;
  */
 public class StormCloud extends Mob {
     private static final EntityDataAccessor<Float> CHARGE = SynchedEntityData.defineId(StormCloud.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Integer> TYPE = SynchedEntityData.defineId(StormCloud.class, EntityDataSerializers.INT);
+
+    /** The Ram Deity's five weapon-clouds. */
+    public enum Kind {
+        LIGHTNING(0xD8D27A), HAIL(0xE8F4FF), WIND(0xCFEFE0), THUNDER(0x55506A), TORNADO(0x8A8A90);
+        public final int tint;
+
+        Kind(int tint) {
+            this.tint = tint;
+        }
+    }
     private @Nullable UUID owner;
     private int index;
     private @Nullable Vec3 station;
@@ -41,6 +52,11 @@ public class StormCloud extends Mob {
     public void bind(RamGod god, int index) {
         this.owner = god.getUUID();
         this.index = index;
+        entityData.set(TYPE, index % Kind.values().length);
+    }
+
+    public Kind kind() {
+        return Kind.values()[Math.floorMod(entityData.get(TYPE), Kind.values().length)];
     }
 
     public int index() {
@@ -65,6 +81,7 @@ public class StormCloud extends Mob {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(CHARGE, 0f);
+        builder.define(TYPE, 0);
     }
 
     @Override
@@ -72,6 +89,18 @@ public class StormCloud extends Mob {
         super.tick();
         if (level().isClientSide()) {
             if (random.nextInt(3) == 0) level().addParticle(ParticleTypes.CLOUD, getRandomX(1.2), getRandomY(), getRandomZ(1.2), 0, -0.02, 0);
+            switch (kind()) {
+                case HAIL -> { if (random.nextInt(3) == 0) level().addParticle(ParticleTypes.SNOWFLAKE, getRandomX(1), getY(), getRandomZ(1), 0, -0.2, 0); }
+                case WIND -> { if (random.nextInt(4) == 0) level().addParticle(ParticleTypes.SMALL_GUST, getRandomX(1.4), getRandomY(), getRandomZ(1.4), 0, 0, 0); }
+                case THUNDER -> { if (random.nextInt(10) == 0) level().addParticle(ParticleTypes.SONIC_BOOM, getX(), getY() + 0.5, getZ(), 0, 0, 0); }
+                case TORNADO -> {
+                    for (int i = 0; i < 2; i++) {
+                        double a = tickCount * 0.6 + i * Math.PI, h = random.nextDouble() * 9, r = 0.6 + h * 0.18;
+                        level().addParticle(ParticleTypes.CLOUD, getX() + Math.cos(a) * r, getY() - h, getZ() + Math.sin(a) * r, 0, 0.05, 0);
+                    }
+                }
+                default -> { }
+            }
             if (charge() > 0.3f && random.nextInt(2) == 0) level().addParticle(ParticleTypes.ELECTRIC_SPARK, getRandomX(1), getY(), getRandomZ(1), 0, -0.2, 0);
             return;
         }
@@ -84,7 +113,7 @@ public class StormCloud extends Mob {
         Vec3 goal;
         if (station != null) goal = station;
         else {
-            double a = (tickCount * 0.035) + index * Math.PI / 2;
+            double a = (tickCount * 0.035) + index * Math.PI * 2 / 5;
             double r = god.getBbWidth() * 0.9 + 5;
             goal = god.position().add(Math.cos(a) * r, god.getBbHeight() * 0.4 + Math.sin(tickCount * 0.05 + index) * 1.5, Math.sin(a) * r);
         }
@@ -116,6 +145,7 @@ public class StormCloud extends Mob {
     protected void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
         output.putInt("index", index);
+        output.putInt("kind", entityData.get(TYPE));
         if (owner != null) output.putString("owner", owner.toString());
     }
 
@@ -123,6 +153,7 @@ public class StormCloud extends Mob {
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
         index = input.getIntOr("index", 0);
+        entityData.set(TYPE, input.getIntOr("kind", index % 5));
         input.getString("owner").ifPresent(s -> owner = UUID.fromString(s));
     }
 }

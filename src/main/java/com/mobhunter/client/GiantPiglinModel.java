@@ -16,6 +16,7 @@ public class GiantPiglinModel extends EntityModel<GiantPiglinModel.State> {
         public final BlockModelRenderState blade = new BlockModelRenderState();
         public final BlockModelRenderState grip = new BlockModelRenderState();
         public final BlockModelRenderState pommel = new BlockModelRenderState();
+        public final BlockModelRenderState chip = new BlockModelRenderState();
     }
 
     public final ModelPart head, body, rightArm, leftArm, rightLeg, leftLeg;
@@ -133,6 +134,13 @@ public class GiantPiglinModel extends EntityModel<GiantPiglinModel.State> {
                 body.xRot = 0.4f * k;
             }
             default -> { }
+        }
+        // The colossal sword is held in both hands, except while it reaches out or roars.
+        if (pose != AnimPose.GIANT_REACH && pose != AnimPose.GIANT_ROAR && pose != AnimPose.ROAR && pose != AnimPose.EMERGE) {
+            rightArm.yRot -= 0.3f;
+            leftArm.xRot = rightArm.xRot;
+            leftArm.yRot = rightArm.yRot + 0.9f;
+            leftArm.zRot = -rightArm.zRot;
         }
     }
 }

@@ -61,14 +61,27 @@ public class RamGod extends Monster implements DeityBoss, CombatEngine.MovesetPr
     private void spawnClouds(ServerLevel level) {
         if (cloudsSpawned) return;
         cloudsSpawned = true;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             StormCloud c = ModEntities.STORM_CLOUD.get().create(level, EntitySpawnReason.MOB_SUMMONED);
             if (c == null) continue;
             c.bind(this, i);
-            double a = i * Math.PI / 2;
+            double a = i * Math.PI * 2 / 5;
             c.snapTo(getX() + Math.cos(a) * 8, getY() + 2, getZ() + Math.sin(a) * 8, 0, 0);
             level.addFreshEntity(c);
         }
+    }
+
+    public @org.jspecify.annotations.Nullable StormCloud cloud(StormCloud.Kind kind) {
+        for (StormCloud c : clouds()) if (c.kind() == kind) return c;
+        return null;
+    }
+
+    /** Where the horns are: their tips gather charge before lightning. */
+    public Vec3[] hornTips() {
+        Vec3 f = Vec3.directionFromRotation(0, yBodyRot);
+        Vec3 side = new Vec3(-f.z, 0, f.x);
+        Vec3 head = position().add(f.scale(5)).add(0, getBbHeight() * 0.75, 0);
+        return new Vec3[]{head.add(side.scale(3)), head.subtract(side.scale(3))};
     }
 
     public List<StormCloud> clouds() {
@@ -77,7 +90,17 @@ public class RamGod extends Monster implements DeityBoss, CombatEngine.MovesetPr
 
     @Override
     public List<String> moveset() {
-        List<String> list = new ArrayList<>(List.of("ram_lightning", "ram_hail", "ram_gale", "ram_dive", "roar"));
+        List<String> list = new ArrayList<>(List.of("ram_dive", "ram_gale", "roar"));
+        for (StormCloud c : clouds()) {
+            String id = switch (c.kind()) {
+                case LIGHTNING -> "ram_lightning";
+                case HAIL -> "ram_hail";
+                case WIND -> "ram_gust";
+                case THUNDER -> "ram_thunder";
+                case TORNADO -> "ram_tornado";
+            };
+            if (!list.contains(id)) list.add(id);
+        }
         CombatState s = getExistingDataOrNull(ModAttachments.COMBAT);
         if (s != null && s.enraged) list.add("ram_surge");
         if (clouds().size() < 2) list.add("summon_alphas");

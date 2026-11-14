@@ -34,7 +34,7 @@ import org.jspecify.annotations.Nullable;
  */
 public class GiantZombiePiglin extends Monster implements DeityBoss, CombatEngine.MovesetProvider {
     /** Overall render scale relative to a regular zombified piglin. */
-    public static final float SCALE = 9f;
+    public static final float SCALE = 10f;
     private BlockPos home = BlockPos.ZERO;
     private @Nullable UUID held;
 
@@ -90,6 +90,11 @@ public class GiantZombiePiglin extends Monster implements DeityBoss, CombatEngin
         super.aiStep();
         if (level().isClientSide()) {
             if (random.nextInt(2) == 0) level().addParticle(ParticleTypes.PORTAL, getRandomX(1.2), getY(), getRandomZ(1.2), 0, 0.5, 0);
+            // Nether fire, smoke and gold fragments cling to the corpse.
+            if (random.nextInt(2) == 0) level().addParticle(ParticleTypes.FLAME, getRandomX(0.7), getY() + random.nextDouble() * getBbHeight(), getRandomZ(0.7), 0, 0.03, 0);
+            if (random.nextInt(3) == 0) level().addParticle(ParticleTypes.LARGE_SMOKE, getRandomX(0.6), getY() + getBbHeight() * (0.5 + random.nextDouble() * 0.5), getRandomZ(0.6), 0, 0.06, 0);
+            if (random.nextInt(4) == 0) level().addParticle(new net.minecraft.core.particles.BlockParticleOption(ParticleTypes.FALLING_DUST, net.minecraft.world.level.block.Blocks.GOLD_BLOCK.defaultBlockState()),
+                    getRandomX(0.7), getY() + random.nextDouble() * getBbHeight(), getRandomZ(0.7), 0, 0, 0);
             return;
         }
         CombatState s = getExistingDataOrNull(ModAttachments.COMBAT);

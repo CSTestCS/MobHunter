@@ -80,7 +80,10 @@ public class RamGodModel extends EntityModel<DeityRenderState> {
             float sc = 1f + Mth.sin(t * 0.08f + i) * 0.05f;
             puffs[i].xScale = puffs[i].yScale = puffs[i].zScale = sc;
         }
+        // The thunderhead rolls as it surges across the sky, leading with its ram head.
         cloud.yRot = Mth.sin(t * 0.02f) * 0.05f;
+        cloud.zRot = Mth.sin(t * 0.03f) * 0.09f;
+        cloud.xRot = Mth.sin(t * 0.025f + 1) * 0.06f;
         head.yRot = (s.yRot - s.bodyRot) * Mth.DEG_TO_RAD * 0.5f;
         head.xRot = s.xRot * Mth.DEG_TO_RAD * 0.4f + Mth.sin(t * 0.07f) * 0.04f;
         jaw.xRot = 0.1f + Mth.sin(t * 0.1f) * 0.05f;

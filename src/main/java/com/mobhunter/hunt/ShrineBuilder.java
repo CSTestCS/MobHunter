@@ -77,7 +77,7 @@ public final class ShrineBuilder {
     // ----------------------------------------------------------------- Giant Zombie Piglin
     private static BlockPos sunkenPortal(ServerLevel level, BlockPos c) {
         RandomSource r = level.getRandom();
-        int R = 11;
+        int R = 14;
         for (int dx = -R; dx <= R; dx++) for (int dz = -R; dz <= R; dz++) {
             double d = Math.sqrt(dx * dx + dz * dz);
             if (d > R) continue;
@@ -91,9 +91,9 @@ public final class ShrineBuilder {
                     : roll < 0.75f ? Blocks.BLACKSTONE.defaultBlockState() : level.getBlockState(p);
             set(level, p, s);
         }
-        // Flat portal frame lying in the ground: 9x9 outer, 7x7 portal surface.
-        for (int dx = -4; dx <= 4; dx++) for (int dz = -4; dz <= 4; dz++) {
-            boolean frame = Math.abs(dx) == 4 || Math.abs(dz) == 4;
+        // A huge Nether portal lying flat in the ground: 13x13 frame around an 11x11 surface.
+        for (int dx = -6; dx <= 6; dx++) for (int dz = -6; dz <= 6; dz++) {
+            boolean frame = Math.abs(dx) == 6 || Math.abs(dz) == 6;
             BlockPos p = c.offset(dx, -1, dz);
             set(level, p, frame ? (r.nextInt(4) == 0 ? Blocks.CRYING_OBSIDIAN.defaultBlockState() : Blocks.OBSIDIAN.defaultBlockState())
                     : ModBlocks.SUNKEN_PORTAL.get().defaultBlockState());
@@ -101,12 +101,12 @@ public final class ShrineBuilder {
         }
         // Broken portal pillars and scattered gold.
         for (int i = 0; i < 4; i++) {
-            BlockPos base = c.offset(i < 2 ? -6 : 6, 0, i % 2 == 0 ? -6 : 6);
+            BlockPos base = c.offset(i < 2 ? -8 : 8, 0, i % 2 == 0 ? -8 : 8);
             pillar(level, base, 2 + r.nextInt(3), Blocks.OBSIDIAN.defaultBlockState(), Blocks.CRYING_OBSIDIAN.defaultBlockState());
         }
         for (int i = 0; i < 10; i++) {
-            BlockPos p = c.offset(r.nextInt(17) - 8, 0, r.nextInt(17) - 8);
-            if (Math.abs(p.getX() - c.getX()) > 4 || Math.abs(p.getZ() - c.getZ()) > 4) set(level, p, r.nextBoolean() ? Blocks.GOLD_BLOCK.defaultBlockState() : Blocks.FIRE.defaultBlockState());
+            BlockPos p = c.offset(r.nextInt(23) - 11, 0, r.nextInt(23) - 11);
+            if (Math.abs(p.getX() - c.getX()) > 6 || Math.abs(p.getZ() - c.getZ()) > 6) set(level, p, r.nextBoolean() ? Blocks.GOLD_BLOCK.defaultBlockState() : Blocks.FIRE.defaultBlockState());
         }
         return c.below();
     }

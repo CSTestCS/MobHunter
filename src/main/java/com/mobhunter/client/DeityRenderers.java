@@ -89,6 +89,12 @@ public final class DeityRenderers {
         public void extractRenderState(StormCloud e, DeityRenderState s, float partialTicks) {
             super.extractRenderState(e, s, partialTicks);
             s.charge = e.charge();
+            s.cloudKind = e.kind().ordinal();
+        }
+
+        @Override
+        protected int getModelTint(DeityRenderState s) {
+            return 0xFF000000 | com.mobhunter.deity.StormCloud.Kind.values()[s.cloudKind].tint;
         }
 
         @Override

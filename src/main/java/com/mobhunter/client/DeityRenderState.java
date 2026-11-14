@@ -10,4 +10,5 @@ public class DeityRenderState extends LivingEntityRenderState {
     public float progress;
     public float charge;
     public boolean enraged;
+    public int cloudKind;
 }

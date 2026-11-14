@@ -21,7 +21,7 @@ public final class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<StormCloud>> STORM_CLOUD = ENTITIES.registerEntityType("storm_cloud", StormCloud::new,
             MobCategory.MISC, b -> b.sized(3.2f, 1.8f).clientTrackingRange(16).fireImmune());
     public static final DeferredHolder<EntityType<?>, EntityType<GiantZombiePiglin>> GIANT_ZOMBIE_PIGLIN = ENTITIES.registerEntityType("giant_zombie_piglin",
-            GiantZombiePiglin::new, MobCategory.MONSTER, b -> b.sized(7f, 12f).eyeHeight(10.5f).clientTrackingRange(16).fireImmune());
+            GiantZombiePiglin::new, MobCategory.MONSTER, b -> b.sized(8f, 13.5f).eyeHeight(12f).clientTrackingRange(16).fireImmune());
 
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(RAM_GOD.get(), RamGod.createAttributes().build());

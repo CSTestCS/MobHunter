@@ -31,7 +31,12 @@ public class ArmorAnatomyLayer extends RenderLayer<AvatarRenderState, PlayerMode
         if (state.isInvisible) return;
         MonsterSource head = src(state.headEquipment), chest = src(state.chestEquipment), feet = src(state.feetEquipment);
         if (head == null && chest == null && feet == null) return;
-        Skeleton sk = Skeleton.scan(getParentModel().root(), ps);
+        Skeleton sk;
+        try {
+            sk = Skeleton.scan(getParentModel().root(), ps);
+        } catch (RuntimeException ex) {
+            return;
+        }
         BoxBuffer solid = new BoxBuffer(), glow = new BoxBuffer();
         for (MonsterSource s : new MonsterSource[]{head, chest, feet}) {
             if (s == null) continue;

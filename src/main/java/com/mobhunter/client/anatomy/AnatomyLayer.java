@@ -22,6 +22,7 @@ public class AnatomyLayer extends RenderLayer<LivingEntityRenderState, EntityMod
     public static final Identifier GLOW = MobHunter.id("textures/entity/anatomy_glow.png");
     private static final RenderType SOLID = RenderTypes.entityCutout(ATLAS);
     private static final RenderType EMISSIVE = RenderTypes.eyes(GLOW);
+    private static final java.util.Set<Identifier> FAILED = java.util.concurrent.ConcurrentHashMap.newKeySet();
 
     public AnatomyLayer(RenderLayerParent<LivingEntityRenderState, EntityModel<LivingEntityRenderState>> parent) {
         super(parent);
@@ -33,9 +34,15 @@ public class AnatomyLayer extends RenderLayer<LivingEntityRenderState, EntityMod
         if (d == null || d.tier() == Tier.NONE || d.creature() == null || state.isInvisible) return;
         Bestiary.Entry entry = Bestiary.get(d.creature());
         if (entry == null) return;
-        Skeleton sk = Skeleton.scan(getParentModel().root(), ps);
         BoxBuffer solid = new BoxBuffer(), glow = new BoxBuffer();
-        Anatomy.build(sk, entry, d.color(), d.tier(), state.ageInTicks, solid, glow);
+        try {
+            Skeleton sk = Skeleton.scan(getParentModel().root(), ps);
+            Anatomy.build(sk, entry, d.color(), d.tier(), state.ageInTicks, solid, glow);
+        } catch (RuntimeException ex) {
+            // Never let an unusual model break rendering: the creature is simply drawn without its growths.
+            if (FAILED.add(d.creature())) MobHunter.LOGGER.warn("Could not grow anatomy for {}", d.creature(), ex);
+            return;
+        }
         int overlay = LivingEntityRendererAccess.overlay(state);
         if (!solid.isEmpty()) collector.submitCustomGeometry(ps, SOLID, (pose, buf) -> solid.write(buf, light, overlay));
         if (!glow.isEmpty()) collector.submitCustomGeometry(ps, EMISSIVE, (pose, buf) -> glow.write(buf, 0xF000F0, OverlayTexture.NO_OVERLAY));

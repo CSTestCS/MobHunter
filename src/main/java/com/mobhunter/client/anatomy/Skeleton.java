@@ -52,8 +52,11 @@ public final class Skeleton {
      * model author rotated it, so "the top of the body" really is its top (vanilla quadruped bodies are stored
      * rotated by 90 degrees).
      */
-    static Bone orient(Region region, String name, Matrix4f m, Matrix4f rootInv, float x0, float y0, float z0, float x1, float y1, float z1) {
+    static @Nullable Bone orient(Region region, String name, Matrix4f m, Matrix4f rootInv, float x0, float y0, float z0, float x1, float y1, float z1) {
         Matrix3f rel = new Matrix3f(new Matrix4f(rootInv).mul(m));
+        // Parts collapsed to zero scale (hidden tongues, saddles...) have no orientation: skip them.
+        float det = rel.determinant();
+        if (!Float.isFinite(det) || Math.abs(det) < 1.0E-6f) return null;
         Vector3f up = null, front = null;
         float bestUp = -2, bestFront = -2;
         for (Vector3f a : AXES) {
@@ -71,6 +74,7 @@ public final class Skeleton {
                 front = a;
             }
         }
+        if (up == null || front == null) return null;
         Vector3f cy = new Vector3f(up).negate(), cz = new Vector3f(front).negate();
         Vector3f cx = new Vector3f(cy).cross(cz);
         Matrix3f basis = new Matrix3f().setColumn(0, cx).setColumn(1, cy).setColumn(2, cz);
@@ -87,7 +91,8 @@ public final class Skeleton {
         Matrix4f rootInv = new Matrix4f(ps.last().pose()).invert();
         root.visit(ps, (pose, path, index, cube) -> {
             if (cube.maxX - cube.minX <= 0.01f && cube.maxY - cube.minY <= 0.01f) return;
-            s.bones.add(orient(classify(path), path, new Matrix4f(pose.pose()), rootInv, cube.minX, cube.minY, cube.minZ, cube.maxX, cube.maxY, cube.maxZ));
+            Bone b = orient(classify(path), path, new Matrix4f(pose.pose()), rootInv, cube.minX, cube.minY, cube.minZ, cube.maxX, cube.maxY, cube.maxZ);
+            if (b != null) s.bones.add(b);
         });
         Bone biggest = null;
         for (Bone b : s.bones) {

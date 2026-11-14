@@ -1,108 +1,115 @@
 # MobHunter
 
-A NeoForge mod for **Minecraft 26.3**, inspired by the Monster Hunter games. Every creature in the game gets
-**Alpha**, **Monstrous** and **Deity** versions. Each one fights with its own moveset of telegraphed attacks.
-Hunt them for materials, then forge weapons and armor that carry their element.
+A NeoForge mod for **Minecraft 26.3**, inspired by the Monster Hunter games and built to the *Alpha, Monstrous
+and Deity Bestiary*. Every one of the 88 creatures in the current roster has an **Alpha**, a **Monstrous** and a
+**Deity** form, each with its own custom model, its own telegraphed moveset, and its own Blade, Spear and Plate armor.
 
 * Minecraft 26.3, NeoForge 26.3.0.103 or newer, Java 25
-* Build: `./gradlew build`, then use the jar in `build/libs/mobhunter-<version>.jar`
+* Download: `dist/mobhunter-1.0.0.jar`. Build it yourself with `./gradlew build` (output in `build/libs/`).
 
-## The three tiers
+## The bestiary
+Each creature is defined by the bestiary's **material** (horn, fleece, silk, prismarine, ...), its **element**
+(verdant, storm, web, beam, ... 62 elements in all), the **title of its Monstrous form** and the **name of its Deity**:
 
-| Tier | How it appears | Size & power |
+| Creature | Material | Element | Monstrous form | Deity |
+|---|---|---|---|---|
+| Cow | horn | verdant | Bull | Bull Deity |
+| Sheep | fleece | storm | Ram | Ram Deity |
+| Spider | silk | web | World Spider | World Spider Deity |
+| Zombified Piglin | rotgold | netherfire | Portal King | Portal King Deity |
+| Warden | sculk | resonance | Deepdark Sovereign | Deepdark Sovereign Deity |
+| ... | | | | *all 88 creatures* |
+
+Each element belongs to a mechanical family (fire, ice, thunder, water, poison, blast, void, wind, earth, sonic, raw)
+that drives the status it inflicts, the resistances of its armor and its full-set skill.
+
+## Tiers and their bodies
+Every tier has a **custom model**: generated anatomy is grown onto the creature's skeleton and moves with every
+limb. Each creature has its own anatomy drawn from its bestiary material: horns, tusks, spines, plating, crystal
+growths, ribs, crests, fins, fungus, foliage, flame vents, claws, manes, shells, crowns, stingers, wings,
+tendrils and halos.
+
+| Tier | Body | How it appears |
 |---|---|---|
-| **Alpha** | Whenever a group of a creature spawns naturally there is a 6% chance one of them is an Alpha (at most one per pack) | 1.3x size, about 2x health, a reduced moveset of 3 abilities. Alphas of peaceful creatures are territorial: they attack only when you get close or hit them |
-| **Monstrous** | Only through a **Hunt Contract** bought from the Hunt Master | Scaled to roughly 6-7 blocks tall, 260-480 HP, armor, boss bar, full moveset, enrages below 40% HP. Comparable to the Wither or Ender Dragon |
-| **Deity** | Only through a Deity Hunt Contract. The trail leads to the Deity's own **shrine** | A unique eldritch god for each creature (see below). 2000 HP, darkens the sky, the full moveset plus Deity powers (meteor rain, void pull, eldritch gaze, summoning Alphas) |
+| **Alpha** | Only modestly stronger: thicker reinforced material, brighter markings and a modest version of its defining feature, at 1.3x size | 6% of natural group spawns include one (at most one per pack) |
+| **Monstrous** | A hunting-beast evolution: heavily exaggerated structures and a clearly visible glowing core. About 6-7 blocks tall, 260-480 HP, boss bar, enrages below 40% | Only through a **Hunt Contract** |
+| **Deity** | A gigantic, fully physical incarnation: an *enormous* defining feature, a blazing heart, a silhouette that still identifies the creature. 15+ blocks tall, up to 2000 HP | Only through a Deity Hunt Contract, at the end of a trail leading to its own **shrine** |
 
-All 95 vanilla creatures have a profile with an archetype, an element, a colour, a signature move set, an
-entrance and a Deity epithet: for example *The Weaver Below* (spider), *The Hissing Cataclysm* (creeper) and
-*The Moon-Eater* (wolf). Creatures added by other mods get a derived profile automatically, so they can still become Alphas.
-
-### Deities: an eldritch god for every creature
-A Deity is not a bigger version of its creature. Every creature has its own god, built around the
-*concept* of that creature from living copies of creatures and moving architecture of real blocks. Each
-moves in its own way: striding, hovering, or rooted to its shrine. A few examples:
-
-* **The Ram God** (sheep): a living thunderhead with a ram's face and curling horns, orbited by four storm clouds
-  that call lightning onto marked spots, pelt the area with hail and blast gales. The clouds are breakable parts.
-* **The Giant Zombie Piglin** (zombified piglin): the upper half of a colossus emerging from a nether portal that lies
-  flat in the ground, swinging a sword built from real gold blocks. It smashes, slices, grabs and throws hunters,
-  hurls boulders and calls zombified piglins through the portal.
-* **The Mother of Herds** (cow): a cow of impossible size, crowned by a turning wheel of the whole herd.
-* **The Thousand-Eyed Hen** (chicken): an egg-shaped shell of chickens around one vast, staring eye.
-* **The Moon-Eater** (wolf): a wolf howling beneath the moon it has half devoured, circled by the eternal pack.
-* **The Rotting King** (zombie): enthroned atop a pyramid of his own subjects.
-* **The Weaver Below** (spider): a spider on legs that span valleys, before a wheel of webs.
-* **The World Shell** (turtle): a whole landscape, with trees and stone, rides on its shell.
-* **The Hissing Cataclysm** (creeper): a pillar of fused creepers beneath a halo of TNT.
-* **The Glutton Below** (pig): half-sunk in a swamp of its own making, ringed by everything it has eaten.
-* ...and so on for every creature: the stampede that never ends (horse), the shoal without end (cod), the hive
-  ascendant (bee), the deep dark itself (warden), the cauldron mother (witch), the long silence (enderman)...
-
-Every Deity's shrine is built from the materials of its body, and its awakening describes what rises before you.
+### Special Deities
+* **Ram Deity** (sheep): a living thunderhead with a gigantic ram head and curled horns that rolls and surges across
+  the sky. Five weapon-clouds orbit it: the **Lightning Cloud** fires controlled bolts (the horns visibly gather charge
+  first), the **Hail Cloud** launches dense hail, the **Wind Cloud** carves cutting gusts, the **Thunder Cloud**
+  releases sonic shockwaves, and the **Tornado Cloud** lowers a rotating column that drags hunters around. Each cloud
+  can be destroyed, which removes its attack.
+* **Portal King Deity** (zombified piglin): a gigantic undead piglin halfway out of a huge Nether portal lying flat
+  in the ground. The portal pulses purple-red. It carries a colossal chipped sword of real gold blocks in both hands.
+  Its strikes send out burning Nether shockwaves, and Nether fire, smoke and gold fragments cling to its corpse. It
+  slices, grabs and throws hunters, hurls boulders and calls zombified piglins through the portal.
 
 ## Combat: telegraphs instead of run and melee
-Tiered creatures never use plain contact damage. Every hit comes from an ability with three phases:
+Tiered creatures never use plain contact damage. Every hit comes from an ability with a **wind-up**, an **active**
+phase and a **recovery** phase:
 
-1. **Wind-up**: the creature holds an anticipation pose (rears up, crouches, swells, twists, lowers its head,
-   sinks into the ground...). Particle markers show where the attack will land, yellow at first and red just before it fires.
-2. **Active**: the attack happens.
-3. **Recovery**: a punish window.
+* **Wind-up:** the creature holds an anticipation pose (rears up, crouches, swells, twists, lowers its head, sinks into
+  the ground...) while ground markers show where the attack will land, yellow at first and red just before it fires.
+* **Active:** the attack happens.
+* **Recovery:** a punish window.
 
-The poses are applied on top of every vanilla model, so even a chicken visibly coils before it pounces. There are
-about 75 abilities built from reusable families: melee arcs, charges, leaps, ground-slam shockwaves (jump over the
-rings), elemental breath cones, projectile volleys, fang/spike lines, swelling novas, blink strikes, burrow
-ambushes, dive bombs, roars that stagger, lingering clouds, tongue pulls, tracking gaze beams, void pulls and meteor rains.
+There are about 80 abilities: charges, leaps, shockwaves you jump over, breath cones, volleys, spike lines, novas,
+blinks, burrow ambushes, dive bombs, roars, clouds, tongue pulls, gaze beams, void pulls and meteor rains.
 
 ## Hunt contracts
 1. Craft a **Hunting Board** (`paper, iron, paper / 3 planks / plank _ plank`). Unemployed villagers become **Hunt Masters**.
 2. Buy a contract. Monstrous contracts are available from level 1; Deity contracts unlock at levels 4-5.
-3. Use the contract. Green **scoutflies** drift toward the first clue, and the action bar shows the distance and direction.
-4. Clue 1: tracks or shed material. Clue 2: half-eaten remains. Clue 3: something ominous, such as prey frozen in fear beside a
-   pile of corpses. Right-click each clue to read it and send the scoutflies to the next.
-5. Disturbing the final clue makes the monster arrive with an entrance unique to its archetype:
-   burrowing up like a warden, diving from the sky, leaping in from afar, bursting from a geyser,
-   tearing a rift, striking down as lightning, erupting from fire, assembling from bones, or stepping out of fog.
-6. For a Deity, the trail ends at its shrine. Using the altar starts a much longer entrance: the sky darkens,
-   lightning rings the shrine and the Deity descends or rises.
+3. Use the contract. Green **scoutflies** lead you to the first clue, and the action bar shows distance and direction.
+4. The clues escalate: tracks or shed material, then half-eaten remains, then something ominous (frozen prey beside a
+   pile of corpses). Right-click each clue to continue the trail.
+5. Disturbing the final clue makes the Monstrous creature arrive with an entrance suited to it: burrowing up, diving
+   from the sky, leaping in, bursting from a geyser, tearing a rift, striking as lightning, erupting from fire,
+   assembling, or stepping from fog.
+6. A Deity's trail ends at its **shrine**. Using the altar begins a much longer entrance.
 
-Sneak and use a contract to abandon your current hunt.
+Sneak and use a contract to abandon your hunt.
 
-## Materials and gear
-Tiered creatures drop **Hide**, **Claw** and **Gem** materials, tinted in the creature's colour and named after its
-body type (Carapace, Plume, Scale, Gel, Plating...). Forge gear on a normal crafting table. **All monster materials
-in a recipe must come from the same creature and tier.**
+## Gear (crafting philosophy)
+Slain tiered creatures are carved for three kinds of parts, named for their tier:
 
-| Item | Pattern (H hide, C claw, G gem, S stick, T string) |
+| Tier | Example parts (cow) |
 |---|---|
-| Great Sword | ` CC` / `HGC` / `SH ` |
-| Long Sword | ` HC` / ` CH` / `S  ` |
-| Hammer | `HCH` / `HCH` / ` S ` |
-| Dual Blades | `C C` / `S S` |
-| Hunting Bow | ` CT` / `H T` / ` CT` |
-| Helm | `HCH` / `H H` |
-| Mail | `H H` / `HGH` / `HHH` |
-| Greaves | `HCH` / `H H` / `H H` |
-| Boots | `C C` / `H H` |
+| Alpha | Alpha Cow Horn Hide, Alpha Horn Fragment, Alpha Cow Core Shard |
+| Monstrous | Bull Horn Hide, Bull Horn, Bull Core |
+| Deity | Bull Deity Divine Horn Hide, Bull Deity Horn, Bull Deity Heart-Core |
 
-* Stats scale with tier (Alpha, then Monstrous, then Deity).
-* **Weapon specials** (use): Great Sword and Hammer charge while held and release a slash or ground pound. Long Sword has
-  Spirit Slash (dash cut). Dual Blades have Demon Flurry.
-* **Elements**: weapons apply their creature's element on hit (fire, ice, thunder, water, poison, blast, void, wind, earth, sonic, raw).
-* **Hunter's Edge**: hunter weapons deal +35% damage to tiered creatures.
-* **Armor** resists its creature's element (15% per piece). Every piece also reduces monster ability damage by 4%.
-  A full set from one creature unlocks a skill, such as Fire Resistance for a fire set or a chance to blink away from blows for a void set.
+Forge them on a crafting table. **All parts in a recipe must come from the same creature and tier.**
+
+| Gear | Pattern (H hide, C horn/claw part, G core, S stick) | Example names |
+|---|---|---|
+| **Blade** | `C` / `C` / `S` | Alpha Hornblade, Bull Hornblade, Bull Deity Hornblade |
+| **Spear** | `  C` / ` S ` / `S  ` | Alpha Horn-Spear, Bull Horn-Spear, Bull Deity Horn-Spear |
+| **Plate Helm** | `HHH` / `H H` | Bull Hornplate Helm |
+| **Plate Mail** | `H H` / `HGH` / `HHH` | Bull Hornplate Mail |
+| **Plate Greaves** | `HHH` / `H H` / `H H` | Bull Hornplate Greaves |
+| **Plate Boots** | `H H` / `H H` | Bull Hornplate Boots |
+
+* Every creature's gear has its own art at every tier, shaped by its material and coloured by the creature.
+  Its Plate armor has its own armor texture, and growths of the creature's anatomy appear on the wearer (horns or a
+  crest on the helm, spines or crystals on the mail, claws on the boots).
+* **Blade:** hold use to gather the element, release for an elemental slash. **Spear:** the 26.3 spear lunge with
+  reach, and hits release a secondary burst of the element.
+* Weapons deal +35% damage to tiered creatures. Armor resists its element (15% per piece), and a full set from one
+  creature grants a skill.
 
 ## Commands (operators)
 * `/mobhunter summon <creature> <alpha|monstrous|deity>`: spawn a tiered creature with its entrance.
 * `/mobhunter contract <creature> <monstrous|deity>`: get a contract for a specific quarry.
 * `/mobhunter abandon`: abandon your current hunt.
-* `/mobhunter selftest <tier> [creature]`: spawn every creature (or one) at a tier next to dummy targets (for testing).
-* `/mobhunter huntstep`: debug helper that walks you through your hunt (starts a contract in your inventory, teleports to the next clue, then investigates it).
+* `/mobhunter selftest <tier> [creature]`: spawn creatures next to dummy targets (testing).
+* `/mobhunter gearstand <creature> <tier>`: a mannequin wearing that creature's full set, with its gear on display.
+* `/mobhunter huntstep`: debug helper that walks you through your hunt.
 
 ## Notes
-* The Ender Dragon, villagers and wandering traders cannot be targeted by contracts. Villagers and traders are the
-  hunters' clients, and the dragon's AI only works in the End. They can still appear through `/mobhunter summon`.
-* Aquatic Monstrous and Deity creatures "swim" through the air when they are out of water.
-* Monstrous creatures break leaves and plants that block them (respects the `mob_griefing` gamerule).
+* The Ender Dragon, villagers and wandering traders are not contract targets. They can still appear through
+  `/mobhunter summon`.
+* Aquatic Monstrous and Deity creatures swim through the air when out of water.
+* Monstrous creatures break leaves and plants that block them (respects `mob_griefing`). Monstrous and Deity undead
+  do not burn in daylight.

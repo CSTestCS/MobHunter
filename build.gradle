@@ -53,12 +53,6 @@ neoForge {
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
-        testClient {
-            client()
-            gameDirectory = project.file('run-client')
-            programArguments.addAll '--quickPlayMultiplayer', 'localhost:25565', '--width', '1280', '--height', '720'
-        }
-
         server {
             server()
             programArgument '--nogui'

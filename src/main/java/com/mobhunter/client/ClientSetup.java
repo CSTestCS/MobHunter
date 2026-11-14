@@ -17,6 +17,7 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.RAM_GOD.get(), DeityRenderers.RamGodRenderer::new);
         event.registerEntityRenderer(ModEntities.STORM_CLOUD.get(), DeityRenderers.StormCloudRenderer::new);
         event.registerEntityRenderer(ModEntities.GIANT_ZOMBIE_PIGLIN.get(), DeityRenderers.GiantPiglinRenderer::new);
+        event.registerEntityRenderer(ModEntities.ELDRITCH_DEITY.get(), EldritchDeityRenderer::new);
     }
 
     @SubscribeEvent

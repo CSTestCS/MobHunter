@@ -84,11 +84,11 @@ public final class Abilities {
         register(new Nova("levitation_burst", 5f, Element.WIND, 0, false)).timing(28, 4, 26, 220).damage(6);
         // --- misc
         register(new Blink("blink_strike")).timing(16, 6, 18, 120).damage(8);
-        register(new Summon("summon_brood", c -> c.mob.getType(), 2, false, Tier.NONE));
+        register(new Summon("summon_brood", Abilities::selfType, 2, false, Tier.NONE));
         register(new Summon("howl_pack", c -> EntityTypes.WOLF, 3, false, Tier.NONE));
         register(new Summon("summon_vex", c -> EntityTypes.VEX, 3, false, Tier.NONE));
-        register(new Summon("grave_rise", c -> c.mob.getType(), 3, true, Tier.NONE));
-        register(new Summon("summon_alphas", c -> c.mob.getType(), 2, false, Tier.ALPHA)).cooldown = 700;
+        register(new Summon("grave_rise", Abilities::selfType, 3, true, Tier.NONE));
+        register(new Summon("summon_alphas", Abilities::selfType, 2, false, Tier.ALPHA)).cooldown = 700;
         register(new Lightning("lightning_call", 3)).damage(11);
         register(new Burrow("burrow_ambush")).damage(10).cooldown = 220;
         register(new Dive("dive_bomb", null)).damage(10).cooldown = 160;
@@ -105,6 +105,16 @@ public final class Abilities {
         register(new MeteorRain("meteor_rain", 10, null)).damage(10);
         register(new MeteorRain("trident_storm", 7, Element.WATER)).damage(8);
         register(new Gale("gale")).damage(5).cooldown = 160;
+    }
+
+    /** The creature a mob "is": a Deity body counts as the creature it is the god of. */
+    public static EntityType<?> selfType(Ctx c) {
+        if (c.mob instanceof com.mobhunter.deity.EldritchDeity d) {
+            return net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getValue(d.creature());
+        }
+        if (c.mob instanceof com.mobhunter.deity.RamGod) return EntityTypes.SHEEP;
+        if (c.mob instanceof com.mobhunter.deity.GiantZombiePiglin) return EntityTypes.ZOMBIFIED_PIGLIN;
+        return c.mob.getType();
     }
 
     private Abilities() {}

@@ -127,18 +127,32 @@ public final class ShrineBuilder {
             case SONIC -> Blocks.SCULK.defaultBlockState();
             default -> Blocks.BONE_BLOCK.defaultBlockState();
         };
+        // The Deity's own materials: the blocks its body is made of.
+        java.util.List<BlockState> palette = new java.util.ArrayList<>();
+        com.mobhunter.deity.form.DeityForm form = com.mobhunter.deity.form.DeityForms.get(profile.id());
+        if (form != null) for (var part : form.parts()) {
+            if (part.block() != null && part.block().isSolidRender() && !palette.contains(part.block())) palette.add(part.block());
+        }
+        if (palette.isEmpty()) palette.add(theme);
+        BlockState accent = palette.get(0);
+        BlockState second = palette.size() > 1 ? palette.get(1) : theme;
         platform(level, c, 10, Blocks.POLISHED_BLACKSTONE_BRICKS.defaultBlockState(), Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.defaultBlockState(), 22);
         for (int dx = -10; dx <= 10; dx++) for (int dz = -10; dz <= 10; dz++) {
             int d2 = dx * dx + dz * dz;
-            if (d2 <= 100 && r.nextInt(5) == 0) set(level, c.offset(dx, -1, dz), theme);
+            if (d2 <= 100 && r.nextInt(4) == 0) set(level, c.offset(dx, -1, dz), r.nextBoolean() ? accent : theme);
             if (d2 >= 30 && d2 <= 36) set(level, c.offset(dx, -1, dz), Blocks.CRYING_OBSIDIAN.defaultBlockState());
         }
         for (int i = 0; i < 6; i++) {
             double a = i * Math.PI / 3;
             BlockPos base = c.offset((int) Math.round(Math.cos(a) * 8), 0, (int) Math.round(Math.sin(a) * 8));
-            pillar(level, base, 5 + r.nextInt(4), Blocks.BLACKSTONE.defaultBlockState(), Blocks.SOUL_LANTERN.defaultBlockState());
-            set(level, base.above(2), theme);
+            int h = 5 + r.nextInt(4);
+            for (int y = 0; y < h; y++) set(level, base.above(y), y % 3 == 2 ? accent : Blocks.BLACKSTONE.defaultBlockState());
+            set(level, base.above(h), second);
+            set(level, base.above(h + 1), Blocks.SOUL_LANTERN.defaultBlockState());
         }
+        // An effigy of the creature's concept at the heart of the shrine.
+        for (int y = 1; y <= 3; y++) set(level, c.offset(0, y, 4), accent);
+        set(level, c.offset(0, 4, 4), second);
         for (int dx = -1; dx <= 1; dx++) for (int dz = -1; dz <= 1; dz++) set(level, c.offset(dx, 0, dz), Blocks.POLISHED_BLACKSTONE.defaultBlockState());
         for (int i = 0; i < 4; i++) {
             BlockPos p = c.offset(i < 2 ? -2 : 2, 0, i % 2 == 0 ? -2 : 2);

@@ -98,7 +98,7 @@ public final class TierEvents {
         // Tiered creatures are tougher against their own element.
         Tier vt = TierManager.tier(victim);
         if (vt != Tier.NONE) {
-            CreatureProfile p = CreatureProfiles.get(victim.getType());
+            CreatureProfile p = CreatureProfiles.get(victim);
             if (p != null && p.element().matches(event.getSource())) event.setAmount(event.getAmount() * 0.25f);
             CombatState s = victim.getExistingDataOrNull(ModAttachments.COMBAT);
             if (s != null && s.entrance != null) event.setCanceled(true);
@@ -110,7 +110,7 @@ public final class TierEvents {
         LivingEntity e = event.getEntity();
         Tier tier = TierManager.tier(e);
         if (tier == Tier.NONE || !(e.level() instanceof ServerLevel level)) return;
-        CreatureProfile profile = CreatureProfiles.get(e.getType());
+        CreatureProfile profile = CreatureProfiles.get(e);
         if (profile == null) return;
         MaterialDrops.addDrops(level, e, profile, tier, event.getDrops(), event.getSource());
     }

@@ -181,7 +181,13 @@ public final class CreatureProfiles {
     }
 
     public static @Nullable CreatureProfile get(Mob mob) {
-        return get(mob.getType());
+        return get((net.minecraft.world.entity.LivingEntity) mob);
+    }
+
+    /** Profile of a living entity; Deity bodies resolve to the creature they are the god of. */
+    public static @Nullable CreatureProfile get(net.minecraft.world.entity.LivingEntity e) {
+        if (e instanceof com.mobhunter.deity.EldritchDeity d) return get(d.creature());
+        return get(e.getType());
     }
 
     public static Collection<CreatureProfile> all() {

@@ -13,23 +13,34 @@ Hunt them for materials, then forge weapons and armor that carry their element.
 |---|---|---|
 | **Alpha** | Whenever a group of a creature spawns naturally there is a 6% chance one of them is an Alpha (at most one per pack) | 1.3x size, about 2x health, a reduced moveset of 3 abilities. Alphas of peaceful creatures are territorial: they attack only when you get close or hit them |
 | **Monstrous** | Only through a **Hunt Contract** bought from the Hunt Master | Scaled to roughly 6-7 blocks tall, 260-480 HP, armor, boss bar, full moveset, enrages below 40% HP. Comparable to the Wither or Ender Dragon |
-| **Deity** | Only through a Deity Hunt Contract. The trail leads to the Deity's own **shrine** | 1100-2000 HP, 15+ blocks tall, darkens the sky, eldritch echoes, the full moveset plus Deity powers (meteor rain, void pull, eldritch gaze, summoning Alphas) |
+| **Deity** | Only through a Deity Hunt Contract. The trail leads to the Deity's own **shrine** | A unique eldritch god for each creature (see below). 2000 HP, darkens the sky, the full moveset plus Deity powers (meteor rain, void pull, eldritch gaze, summoning Alphas) |
 
 All 95 vanilla creatures have a profile with an archetype, an element, a colour, a signature move set, an
 entrance and a Deity epithet: for example *The Weaver Below* (spider), *The Hissing Cataclysm* (creeper) and
 *The Moon-Eater* (wolf). Creatures added by other mods get a derived profile automatically, so they can still become Alphas.
 
-### Bespoke Deities
-* **The Ram God** (sheep): a living thunderhead with a ram's face and curling horns, orbited by four storm clouds.
-  The clouds slide over marked spots and call lightning, swell white and pelt an area with hail, and the god
-  inhales before blasting a gale or lowers its horns and dives. The clouds can be destroyed (they are breakable
-  parts); each one alive reduces the damage the god takes by 10%.
-* **The Giant Zombie Piglin** (zombified piglin): its shrine is a nether portal lying flat in the ground. When awakened,
-  the portal lights and the upper half of a colossal zombie piglin claws its way out, holding a sword built from real
-  gold blocks. It cannot move, but it smashes, slices in wide arcs, grabs and throws hunters, tears up boulders and
-  hurls them, and calls zombified piglins through the portal.
-* Every other Deity is the creature grown to colossal size, ringed by translucent violet afterimages of itself,
-  with an eldritch shrine themed to its element.
+### Deities: an eldritch god for every creature
+A Deity is not a bigger version of its creature. Every creature has its own god, built around the
+*concept* of that creature from living copies of creatures and moving architecture of real blocks. Each
+moves in its own way: striding, hovering, or rooted to its shrine. A few examples:
+
+* **The Ram God** (sheep): a living thunderhead with a ram's face and curling horns, orbited by four storm clouds
+  that call lightning onto marked spots, pelt the area with hail and blast gales. The clouds are breakable parts.
+* **The Giant Zombie Piglin** (zombified piglin): the upper half of a colossus emerging from a nether portal that lies
+  flat in the ground, swinging a sword built from real gold blocks. It smashes, slices, grabs and throws hunters,
+  hurls boulders and calls zombified piglins through the portal.
+* **The Mother of Herds** (cow): a cow of impossible size, crowned by a turning wheel of the whole herd.
+* **The Thousand-Eyed Hen** (chicken): an egg-shaped shell of chickens around one vast, staring eye.
+* **The Moon-Eater** (wolf): a wolf howling beneath the moon it has half devoured, circled by the eternal pack.
+* **The Rotting King** (zombie): enthroned atop a pyramid of his own subjects.
+* **The Weaver Below** (spider): a spider on legs that span valleys, before a wheel of webs.
+* **The World Shell** (turtle): a whole landscape, with trees and stone, rides on its shell.
+* **The Hissing Cataclysm** (creeper): a pillar of fused creepers beneath a halo of TNT.
+* **The Glutton Below** (pig): half-sunk in a swamp of its own making, ringed by everything it has eaten.
+* ...and so on for every creature: the stampede that never ends (horse), the shoal without end (cod), the hive
+  ascendant (bee), the deep dark itself (warden), the cauldron mother (witch), the long silence (enderman)...
+
+Every Deity's shrine is built from the materials of its body, and its awakening describes what rises before you.
 
 ## Combat: telegraphs instead of run and melee
 Tiered creatures never use plain contact damage. Every hit comes from an ability with three phases:

@@ -70,7 +70,8 @@ public final class EntranceController {
                 case CRASH_LANDING -> end.add(mob.getLookAngle().scale(-34)).add(0, 18, 0);
                 default -> end;
             };
-            case DEITY -> end.add(0, 40, 0);
+            case DEITY -> mob instanceof com.mobhunter.deity.EldritchDeity d && d.form().movement() == com.mobhunter.deity.form.DeityForm.Movement.ANCHORED
+                    ? end.subtract(0, h + 2, 0) : end.add(0, 40, 0);
             case RAM_GOD -> end.add(0, 14, 0);
             case GIANT_PIGLIN -> end.subtract(0, h + 2, 0);
         };

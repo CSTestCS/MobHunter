@@ -31,7 +31,7 @@ public class HunterArmorItem extends Item {
             tooltip.accept(Component.translatable("item.mobhunter.material.blank").withStyle(ChatFormatting.GRAY));
             return;
         }
-        Component el = Component.translatable(src.element().translationKey()).withStyle(src.element().chat);
+        Component el = GearEffects.elementName(src);
         tooltip.accept(Component.translatable("mobhunter.tooltip.resist", el).withStyle(ChatFormatting.GRAY));
         tooltip.accept(Component.translatable("mobhunter.tooltip.set_bonus").withStyle(ChatFormatting.GOLD));
         tooltip.accept(Component.literal("  ").append(Component.translatable("mobhunter.set." + src.element().getSerializedName())).withStyle(ChatFormatting.YELLOW));

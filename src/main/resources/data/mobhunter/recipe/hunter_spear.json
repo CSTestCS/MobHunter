@@ -1,0 +1,1 @@
+{"type": "mobhunter:monster_forge", "pattern": ["  C", " S ", "S  "], "key": {"C": "mobhunter:monster_claw", "S": "minecraft:stick"}, "result": "mobhunter:hunter_spear"}

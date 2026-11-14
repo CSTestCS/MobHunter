@@ -62,6 +62,33 @@ public final class Anatomy {
         if (tier == Tier.MONSTROUS || tier == Tier.DEITY) c.core(tier == Tier.DEITY ? 2.2f : 1.4f);
     }
 
+    private static final java.util.Set<Feature> HEAD_FEATURES = java.util.EnumSet.of(Feature.HORNS, Feature.TUSKS, Feature.CROWN, Feature.FEATHERS, Feature.MANE, Feature.HALO);
+
+    /**
+     * Plate armor carries its creature's anatomy onto the wearer: the helm grows the creature's horns, crest or crown,
+     * the mail its spines, crystals, shell or wings, the boots its claws.
+     */
+    public static void buildArmor(Skeleton sk, Bestiary.Entry e, int creatureColor, Tier tier, float age, boolean helm, boolean mail, boolean boots,
+                                  BoxBuffer solid, BoxBuffer glow) {
+        if (sk.body == null) return;
+        Ctx c = new Ctx(sk, e, creatureColor, tier, age, solid, glow);
+        float s = switch (tier) {
+            case MONSTROUS -> 0.5f;
+            case DEITY -> 0.7f;
+            default -> 0.35f;
+        };
+        if (helm) {
+            Feature f = e.features().stream().filter(HEAD_FEATURES::contains).findFirst().orElse(Feature.CROWN);
+            c.feature(f, s, 0);
+        }
+        if (mail) {
+            Feature f = e.features().stream().filter(x -> !HEAD_FEATURES.contains(x) && x != Feature.CLAWS).findFirst().orElse(Feature.PLATES);
+            c.feature(f, s, 1);
+            if (tier == Tier.DEITY) c.core(0.6f);
+        }
+        if (boots) c.claws(s);
+    }
+
     static final class Ctx {
         final Skeleton sk;
         final Bone head, body;

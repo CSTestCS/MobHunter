@@ -2,12 +2,10 @@ package com.mobhunter.gear;
 
 import net.minecraft.world.entity.EquipmentSlot;
 
+/** The equipment of the bestiary: a Blade, a Spear and a set of Plate armor per creature and tier. */
 public enum GearKind {
-    GREAT_SWORD("great_sword", 9f, -3.15f, null),
-    LONG_SWORD("long_sword", 6.5f, -2.5f, null),
-    HAMMER("hammer", 8f, -3.0f, null),
-    DUAL_BLADES("dual_blades", 3.5f, -1.5f, null),
-    HUNTING_BOW("hunting_bow", 0f, 0f, null),
+    BLADE("blade", 6f, -2.4f, null),
+    SPEAR("spear", 4f, -2.8f, null),
     HELMET("helmet", 0, 0, EquipmentSlot.HEAD),
     CHESTPLATE("chestplate", 0, 0, EquipmentSlot.CHEST),
     LEGGINGS("leggings", 0, 0, EquipmentSlot.LEGS),
@@ -30,13 +28,13 @@ public enum GearKind {
     }
 
     public int armor(int rank) {
-        int[][] t = switch (this) {
-            case HELMET -> new int[][]{{2}, {3}, {4}};
-            case CHESTPLATE -> new int[][]{{6}, {8}, {9}};
-            case LEGGINGS -> new int[][]{{5}, {6}, {7}};
-            case BOOTS -> new int[][]{{2}, {3}, {4}};
-            default -> new int[][]{{0}, {0}, {0}};
+        int r = Math.max(0, Math.min(2, rank - 1));
+        return switch (this) {
+            case HELMET -> new int[]{2, 3, 4}[r];
+            case CHESTPLATE -> new int[]{6, 8, 9}[r];
+            case LEGGINGS -> new int[]{5, 6, 7}[r];
+            case BOOTS -> new int[]{2, 3, 4}[r];
+            default -> 0;
         };
-        return t[Math.max(0, Math.min(2, rank - 1))][0];
     }
 }

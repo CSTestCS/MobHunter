@@ -28,6 +28,10 @@ public final class ClientSetup {
                 lr.addLayer(new com.mobhunter.client.anatomy.AnatomyLayer(lr));
             }
         }
+        for (var skin : event.getSkins()) {
+            net.minecraft.client.renderer.entity.player.AvatarRenderer r = event.getPlayerRenderer(skin);
+            if (r != null) r.addLayer(new com.mobhunter.client.anatomy.ArmorAnatomyLayer(r));
+        }
     }
 
     @SubscribeEvent

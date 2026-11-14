@@ -32,6 +32,22 @@ public final class GearEffects {
     private static final EquipmentSlot[] ARMOR = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     private static final String ARROW_TAG = "mobhunter_arrow_";
 
+    /** The bestiary element of a creature's gear ("Verdant", "Storm"), coloured by its family. */
+    public static net.minecraft.network.chat.Component elementName(MonsterSource src) {
+        var p = src.profile();
+        var e = p == null ? null : p.entry();
+        net.minecraft.network.chat.MutableComponent c = e != null ? net.minecraft.network.chat.Component.literal(e.elementTitle())
+                : net.minecraft.network.chat.Component.translatable(src.element().translationKey());
+        return c.withStyle(src.element().chat);
+    }
+
+    /** "horn", "fleece"... */
+    public static net.minecraft.network.chat.Component materialName(MonsterSource src) {
+        var p = src.profile();
+        var e = p == null ? null : p.entry();
+        return net.minecraft.network.chat.Component.literal(e != null ? e.material() : "monster");
+    }
+
     public static @Nullable MonsterSource source(ItemStack stack) {
         return stack.isEmpty() ? null : stack.get(ModComponents.MONSTER_SOURCE.get());
     }
@@ -107,9 +123,7 @@ public final class GearEffects {
     public static void onArrowJoin(EntityJoinLevelEvent event) {
         if (event.getLevel().isClientSide() || !(event.getEntity() instanceof AbstractArrow arrow) || event.loadedFromDisk()) return;
         if (!(arrow.getOwner() instanceof Player p)) return;
-        ItemStack bow = p.getMainHandItem().getItem() instanceof HunterBowItem ? p.getMainHandItem()
-                : p.getOffhandItem().getItem() instanceof HunterBowItem ? p.getOffhandItem() : ItemStack.EMPTY;
-        MonsterSource src = source(bow);
+        MonsterSource src = null;
         if (src == null) return;
         arrow.setBaseDamage(2.0 * GearStats.weaponMult(src.tier()) + src.tier().rank * 0.5);
         arrow.addTag(ARROW_TAG + src.creature().getNamespace() + "__" + src.creature().getPath() + "__" + src.tier().getSerializedName());

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "mobhunter:item/long_sword",
-    "layer1": "mobhunter:item/long_sword_hilt"
-  }
-}

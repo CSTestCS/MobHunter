@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "mobhunter:item/hunter_leggings",
-    "layer1": "mobhunter:item/hunter_leggings_overlay"
-  }
-}

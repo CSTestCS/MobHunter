@@ -1,13 +1,1 @@
-{
-  "type": "mobhunter:monster_forge",
-  "pattern": [
-    "H H",
-    "HGH",
-    "HHH"
-  ],
-  "key": {
-    "H": "mobhunter:monster_hide",
-    "G": "mobhunter:monster_gem"
-  },
-  "result": "mobhunter:hunter_chestplate"
-}
+{"type": "mobhunter:monster_forge", "pattern": ["H H", "HGH", "HHH"], "key": {"H": "mobhunter:monster_hide", "G": "mobhunter:monster_gem"}, "result": "mobhunter:hunter_chestplate"}

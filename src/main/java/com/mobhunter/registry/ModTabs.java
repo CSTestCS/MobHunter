@@ -21,7 +21,7 @@ public final class ModTabs {
 
     public static final Supplier<CreativeModeTab> MAIN = TABS.register("main", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.mobhunter"))
-            .icon(() -> new ItemStack(ModItems.GREAT_SWORD.get()))
+            .icon(() -> new ItemStack(ModItems.HUNTER_BLADE.get()))
             .displayItems((params, out) -> {
                 out.accept(ModItems.HUNTING_BOARD.get());
                 CreatureProfile sheep = CreatureProfiles.get(net.minecraft.resources.Identifier.withDefaultNamespace("sheep"));
@@ -40,17 +40,17 @@ public final class ModTabs {
                         out.accept(MonsterMaterialItem.create(ModItems.MONSTER_GEM.get(), p, t, 1));
                     }
                 }
-                if (creeper != null) {
-                    MonsterSource src = new MonsterSource(creeper.id(), Tier.MONSTROUS);
-                    out.accept(GearStats.forge(ModItems.GREAT_SWORD.get(), GearKind.GREAT_SWORD, src));
-                    out.accept(GearStats.forge(ModItems.LONG_SWORD.get(), GearKind.LONG_SWORD, src));
-                    out.accept(GearStats.forge(ModItems.HAMMER.get(), GearKind.HAMMER, src));
-                    out.accept(GearStats.forge(ModItems.DUAL_BLADES.get(), GearKind.DUAL_BLADES, src));
-                    out.accept(GearStats.forge(ModItems.HUNTING_BOW.get(), GearKind.HUNTING_BOW, src));
-                    out.accept(GearStats.forge(ModItems.HUNTER_HELMET.get(), GearKind.HELMET, src));
-                    out.accept(GearStats.forge(ModItems.HUNTER_CHESTPLATE.get(), GearKind.CHESTPLATE, src));
-                    out.accept(GearStats.forge(ModItems.HUNTER_LEGGINGS.get(), GearKind.LEGGINGS, src));
-                    out.accept(GearStats.forge(ModItems.HUNTER_BOOTS.get(), GearKind.BOOTS, src));
+                for (CreatureProfile p : new CreatureProfile[]{sheep, creeper, spider}) {
+                    if (p == null) continue;
+                    for (Tier t : new Tier[]{Tier.ALPHA, Tier.MONSTROUS, Tier.DEITY}) {
+                        MonsterSource src = new MonsterSource(p.id(), t);
+                        out.accept(GearStats.forge(ModItems.HUNTER_BLADE.get(), GearKind.BLADE, src));
+                        out.accept(GearStats.forge(ModItems.HUNTER_SPEAR.get(), GearKind.SPEAR, src));
+                        out.accept(GearStats.forge(ModItems.HUNTER_HELMET.get(), GearKind.HELMET, src));
+                        out.accept(GearStats.forge(ModItems.HUNTER_CHESTPLATE.get(), GearKind.CHESTPLATE, src));
+                        out.accept(GearStats.forge(ModItems.HUNTER_LEGGINGS.get(), GearKind.LEGGINGS, src));
+                        out.accept(GearStats.forge(ModItems.HUNTER_BOOTS.get(), GearKind.BOOTS, src));
+                    }
                 }
             })
             .build());

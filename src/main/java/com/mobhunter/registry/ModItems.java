@@ -3,7 +3,6 @@ package com.mobhunter.registry;
 import com.mobhunter.MobHunter;
 import com.mobhunter.gear.GearKind;
 import com.mobhunter.gear.HunterArmorItem;
-import com.mobhunter.gear.HunterBowItem;
 import com.mobhunter.gear.HunterWeaponItem;
 import com.mobhunter.gear.MaterialPart;
 import com.mobhunter.gear.MonsterMaterialItem;
@@ -38,11 +37,10 @@ public final class ModItems {
             p -> p.rarity(Rarity.RARE));
     public static final DeferredItem<HuntContractItem> HUNT_CONTRACT = ITEMS.registerItem("hunt_contract", HuntContractItem::new, p -> p.stacksTo(1).rarity(Rarity.UNCOMMON));
 
-    public static final DeferredItem<HunterWeaponItem> GREAT_SWORD = weapon(GearKind.GREAT_SWORD);
-    public static final DeferredItem<HunterWeaponItem> LONG_SWORD = weapon(GearKind.LONG_SWORD);
-    public static final DeferredItem<HunterWeaponItem> HAMMER = weapon(GearKind.HAMMER);
-    public static final DeferredItem<HunterWeaponItem> DUAL_BLADES = weapon(GearKind.DUAL_BLADES);
-    public static final DeferredItem<HunterBowItem> HUNTING_BOW = ITEMS.registerItem("hunting_bow", HunterBowItem::new, p -> p.durability(650).enchantable(1));
+    public static final DeferredItem<HunterWeaponItem> HUNTER_BLADE = ITEMS.registerItem("hunter_blade", p -> new HunterWeaponItem(GearKind.BLADE, p),
+            p -> p.sword(ToolMaterial.IRON, 3f, -2.4f));
+    public static final DeferredItem<HunterWeaponItem> HUNTER_SPEAR = ITEMS.registerItem("hunter_spear", p -> new HunterWeaponItem(GearKind.SPEAR, p),
+            p -> p.spear(ToolMaterial.IRON, 0.95F, 0.95F, 0.6F, 2.5F, 11.0F, 6.75F, 5.1F, 11.25F, 4.6F));
 
     public static final DeferredItem<HunterArmorItem> HUNTER_HELMET = armor(GearKind.HELMET, ArmorType.HELMET);
     public static final DeferredItem<HunterArmorItem> HUNTER_CHESTPLATE = armor(GearKind.CHESTPLATE, ArmorType.CHESTPLATE);
@@ -50,10 +48,6 @@ public final class ModItems {
     public static final DeferredItem<HunterArmorItem> HUNTER_BOOTS = armor(GearKind.BOOTS, ArmorType.BOOTS);
 
     public static final DeferredItem<net.minecraft.world.item.BlockItem> HUNTING_BOARD = ITEMS.registerSimpleBlockItem(ModBlocks.HUNTING_BOARD);
-
-    private static DeferredItem<HunterWeaponItem> weapon(GearKind kind) {
-        return ITEMS.registerItem(kind.name, p -> new HunterWeaponItem(kind, p), p -> p.sword(ToolMaterial.IRON, kind.damage - 2, kind.speed));
-    }
 
     private static DeferredItem<HunterArmorItem> armor(GearKind kind, ArmorType type) {
         return ITEMS.registerItem("hunter_" + kind.name, p -> new HunterArmorItem(kind, p), p -> p.humanoidArmor(HUNTER_ARMOR, type));

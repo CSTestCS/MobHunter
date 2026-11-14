@@ -63,7 +63,7 @@ public class MonsterForgeRecipe extends CustomRecipe {
         MonsterSource src = commonSource(input);
         Item item = result.value();
         if (src == null) return ItemStack.EMPTY;
-        GearKind kind = item instanceof HunterWeaponItem w ? w.kind : item instanceof HunterArmorItem a ? a.kind : GearKind.HUNTING_BOW;
+        GearKind kind = item instanceof HunterWeaponItem w ? w.kind : ((HunterArmorItem) item).kind;
         return GearStats.forge(item, kind, src);
     }
 

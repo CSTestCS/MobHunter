@@ -99,6 +99,15 @@ public final class TierManager {
 
     public static MutableComponent displayName(CreatureProfile profile, Tier tier) {
         if (tier == Tier.DEITY) return Component.literal(profile.epithet()).withStyle(tier.color, net.minecraft.ChatFormatting.BOLD);
+        if (tier == Tier.MONSTROUS && profile.entry() != null) {
+            // "Monstrous Bull Cow", "Monstrous Crystal-Winged Allay", but "Monstrous Ravager Titan".
+            String title = profile.entry().monstrousTitle();
+            String creature = creatureName(profile).getString();
+            String last = creature.substring(creature.lastIndexOf(' ') + 1).toLowerCase(java.util.Locale.ROOT);
+            Component name = title.toLowerCase(java.util.Locale.ROOT).contains(last) ? Component.literal(title)
+                    : Component.literal(title + " ").append(creatureName(profile));
+            return Component.translatable("mobhunter.tier.monstrous_titled", name).withStyle(tier.color);
+        }
         return Component.translatable(tier.translationKey()).append(" ").append(creatureName(profile)).withStyle(tier.color);
     }
 

@@ -145,6 +145,11 @@ public final class CreatureProfiles {
     }
 
     private static void p(String path, Archetype a, Element e, int color, String epithet, List<String> sig, Entrance entrance, Movement m, boolean contract) {
+        // The bestiary defines the roster: its element and Deity name are authoritative.
+        Bestiary.Entry b = Bestiary.get(path);
+        if (b == null) return;
+        e = b.family();
+        epithet = b.deityName();
         Identifier id = Identifier.withDefaultNamespace(path);
         PROFILES.put(id, new CreatureProfile(id, a, e, color, epithet, sig, entrance, m, contract));
     }
@@ -184,9 +189,7 @@ public final class CreatureProfiles {
         return get((net.minecraft.world.entity.LivingEntity) mob);
     }
 
-    /** Profile of a living entity; Deity bodies resolve to the creature they are the god of. */
     public static @Nullable CreatureProfile get(net.minecraft.world.entity.LivingEntity e) {
-        if (e instanceof com.mobhunter.deity.EldritchDeity d) return get(d.creature());
         return get(e.getType());
     }
 

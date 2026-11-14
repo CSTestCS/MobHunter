@@ -82,6 +82,11 @@ public final class TierEvents {
         if (!(e instanceof Mob mob) || !(e.level() instanceof ServerLevel level)) return;
         Tier tier = mob.getExistingDataOrNull(ModAttachments.TIER);
         if (tier == null || tier == Tier.NONE) return;
+        // Monstrous and Deity undead do not wither in sunlight (fire and lava still burn them).
+        if (tier.isBoss() && mob.getRemainingFireTicks() > 0 && mob.is(net.minecraft.tags.EntityTypeTags.BURN_IN_DAYLIGHT)
+                && !mob.isInLava() && !level.getBlockState(mob.blockPosition()).is(net.minecraft.tags.BlockTags.FIRE)) {
+            mob.clearFire();
+        }
         CombatEngine.tick(level, mob, tier);
     }
 

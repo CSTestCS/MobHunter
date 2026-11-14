@@ -127,13 +127,7 @@ public final class ShrineBuilder {
             case SONIC -> Blocks.SCULK.defaultBlockState();
             default -> Blocks.BONE_BLOCK.defaultBlockState();
         };
-        // The Deity's own materials: the blocks its body is made of.
-        java.util.List<BlockState> palette = new java.util.ArrayList<>();
-        com.mobhunter.deity.form.DeityForm form = com.mobhunter.deity.form.DeityForms.get(profile.id());
-        if (form != null) for (var part : form.parts()) {
-            if (part.block() != null && part.block().isSolidRender() && !palette.contains(part.block())) palette.add(part.block());
-        }
-        if (palette.isEmpty()) palette.add(theme);
+        java.util.List<BlockState> palette = new java.util.ArrayList<>(java.util.List.of(theme));
         BlockState accent = palette.get(0);
         BlockState second = palette.size() > 1 ? palette.get(1) : theme;
         platform(level, c, 10, Blocks.POLISHED_BLACKSTONE_BRICKS.defaultBlockState(), Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.defaultBlockState(), 22);

@@ -19,6 +19,11 @@ public record CreatureProfile(Identifier id, Archetype archetype, Element elemen
 
     public enum Movement { GROUND, FLYING, SWIMMING, IMMOBILE }
 
+    /** The bestiary entry (material, element, titles, anatomy). */
+    public Bestiary.@org.jspecify.annotations.Nullable Entry entry() {
+        return Bestiary.get(id);
+    }
+
     /** Abilities used at a given tier. Alphas get a reduced kit, Deities get eldritch extras. */
     public List<String> moveset(Tier tier) {
         List<String> list = new ArrayList<>();

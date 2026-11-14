@@ -109,9 +109,6 @@ public final class Abilities {
 
     /** The creature a mob "is": a Deity body counts as the creature it is the god of. */
     public static EntityType<?> selfType(Ctx c) {
-        if (c.mob instanceof com.mobhunter.deity.EldritchDeity d) {
-            return net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getValue(d.creature());
-        }
         if (c.mob instanceof com.mobhunter.deity.RamGod) return EntityTypes.SHEEP;
         if (c.mob instanceof com.mobhunter.deity.GiantZombiePiglin) return EntityTypes.ZOMBIFIED_PIGLIN;
         return c.mob.getType();

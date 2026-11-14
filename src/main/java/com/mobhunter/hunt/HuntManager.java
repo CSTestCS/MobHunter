@@ -7,6 +7,7 @@ import com.mobhunter.core.HuntState;
 import com.mobhunter.core.Tier;
 import com.mobhunter.core.TierManager;
 import com.mobhunter.deity.DeityBoss;
+import com.mobhunter.profile.Bestiary;
 import com.mobhunter.profile.CreatureProfile;
 import com.mobhunter.profile.CreatureProfiles;
 import com.mobhunter.registry.ModAttachments;
@@ -296,8 +297,9 @@ public final class HuntManager {
         if (profile == null) return false;
         set(player, HuntState.NONE);
         player.sendSystemMessage(Component.translatable("mobhunter.hunt.deity_awakens", profile.epithet()).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD));
-        com.mobhunter.deity.form.DeityForm form = com.mobhunter.deity.form.DeityForms.get(profile.id());
-        if (form != null) player.sendSystemMessage(Component.literal("Before you rises " + form.concept() + ".").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
+        Bestiary.Entry entry = profile.entry();
+        if (entry != null) player.sendSystemMessage(Component.translatable("mobhunter.hunt.deity_incarnation", profile.epithet(), TierManager.creatureName(profile),
+                Component.literal(entry.elementName())).withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
         summon(level, profile, Tier.DEITY, s.shrinePos().get(), player);
         return true;
     }
@@ -312,11 +314,6 @@ public final class HuntManager {
         } else if (tier == Tier.DEITY && profile.id().getPath().equals("zombified_piglin")) {
             mob = ModEntities.GIANT_ZOMBIE_PIGLIN.get().create(level, EntitySpawnReason.EVENT);
             style = EntranceController.Style.GIANT_PIGLIN;
-        } else if (tier == Tier.DEITY) {
-            com.mobhunter.deity.EldritchDeity deity = ModEntities.ELDRITCH_DEITY.get().create(level, EntitySpawnReason.EVENT);
-            if (deity != null) deity.setCreature(profile.id());
-            mob = deity;
-            style = EntranceController.Style.DEITY;
         } else {
             EntityType<?> type = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getValue(profile.id());
             if (type.create(level, EntitySpawnReason.EVENT) instanceof Mob m) mob = m;

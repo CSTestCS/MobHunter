@@ -2,7 +2,9 @@ package com.mobhunter.client;
 
 import com.mobhunter.core.AnimPose;
 import com.mobhunter.core.Tier;
+import net.minecraft.resources.Identifier;
 
 /** Per-frame snapshot of a tiered creature's telegraph animation, attached to its render state. */
-public record TelegraphData(Tier tier, AnimPose pose, int phase, float progress, float width, float height, boolean deityEchoes) {
+public record TelegraphData(Tier tier, AnimPose pose, int phase, float progress, float width, float height, boolean deityEchoes,
+                            net.minecraft.resources.@org.jspecify.annotations.Nullable Identifier creature, int color) {
 }

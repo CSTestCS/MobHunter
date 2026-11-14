@@ -41,8 +41,9 @@ public final class TelegraphRenderEvents {
             AnimState anim = e.getExistingDataOrNull(ModAttachments.ANIM);
             if (anim == null) anim = AnimState.IDLE;
             float now = e.level().getGameTime() + s.partialTick;
-            s.setRenderData(DATA, new TelegraphData(tier, anim.animPose(), anim.phase(), anim.progress(now), e.getBbWidth(), e.getBbHeight(),
-                    tier == Tier.DEITY && !(e instanceof DeityBoss)));
+            var profile = com.mobhunter.profile.CreatureProfiles.get(e);
+            s.setRenderData(DATA, new TelegraphData(tier, anim.animPose(), anim.phase(), anim.progress(now), e.getBbWidth(), e.getBbHeight(), false,
+                    profile == null ? null : profile.id(), profile == null ? 0x808080 : profile.color()));
         });
     }
 
@@ -67,27 +68,6 @@ public final class TelegraphRenderEvents {
         if (s.getRenderData(PUSHED) != null) {
             ps.popPose();
             s.setRenderData(PUSHED, null);
-        }
-        TelegraphData d = s.getRenderData(DATA);
-        if (d == null || !d.deityEchoes() || s.isInvisible) return;
-        // Eldritch echoes: translucent violet afterimages of the Deity drifting around its body.
-        LivingEntityRenderer renderer = event.getRenderer();
-        Identifier texture = renderer.getTextureLocation(s);
-        for (int i = 0; i < 3; i++) {
-            ps.pushPose();
-            float a = s.ageInTicks * 0.015f + i * 2.094f;
-            float r = d.width() * 0.75f + 1.5f;
-            ps.translate(Math.cos(a) * r, d.height() * (0.15f + 0.1f * (float) Math.sin(s.ageInTicks * 0.04f + i)), Math.sin(a) * r);
-            float sc = s.scale * 0.55f;
-            ps.scale(sc, sc, sc);
-            ps.rotateDegrees(Axis.YP, (180f - s.bodyRot + (float) Math.toDegrees(a) * 0.3f));
-            ps.scale(-1, -1, 1);
-            ps.translate(0, -1.501f, 0);
-            int alpha = (int) (70 + 40 * Math.sin(s.ageInTicks * 0.1f + i));
-            int color = (alpha << 24) | 0x9B3DFF;
-            event.getSubmitNodeCollector().submitModel(renderer.getModel(), s, ps, RenderTypes.entityTranslucent(texture), 0xF000F0,
-                    OverlayTexture.NO_OVERLAY, color, null, 0);
-            ps.popPose();
         }
     }
 

@@ -17,7 +17,17 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.RAM_GOD.get(), DeityRenderers.RamGodRenderer::new);
         event.registerEntityRenderer(ModEntities.STORM_CLOUD.get(), DeityRenderers.StormCloudRenderer::new);
         event.registerEntityRenderer(ModEntities.GIANT_ZOMBIE_PIGLIN.get(), DeityRenderers.GiantPiglinRenderer::new);
-        event.registerEntityRenderer(ModEntities.ELDRITCH_DEITY.get(), EldritchDeityRenderer::new);
+    }
+
+    @SubscribeEvent
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void addLayers(EntityRenderersEvent.AddLayers event) {
+        for (net.minecraft.world.entity.EntityType<?> type : event.getEntityTypes()) {
+            if (type == ModEntities.RAM_GOD.get() || type == ModEntities.STORM_CLOUD.get()) continue;
+            if (event.getRenderer(type) instanceof net.minecraft.client.renderer.entity.LivingEntityRenderer lr) {
+                lr.addLayer(new com.mobhunter.client.anatomy.AnatomyLayer(lr));
+            }
+        }
     }
 
     @SubscribeEvent
